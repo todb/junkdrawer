@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+# Usage: GITHUB_API_TOKEN=cafebabedeadbeef GITHUB_USER=username GITHUB_REPO=reponame ./pr-check.rb
 require 'json'
 require 'open-uri'
 require 'pp'
