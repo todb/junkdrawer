@@ -57,10 +57,8 @@ def get_patch_files(uri)
     return files
   end
   doc.each_line do |line|
-    break if line =~ /^\s?[0-9]/
-    in_files = !in_files if (line =~ /^---/)
+    in_files = !in_files if (line =~ /^---$/ or line =~ / [0-9]+ file/)
     next unless in_files
-    next unless line =~ /^\s/
     files << line.strip
   end
   files
