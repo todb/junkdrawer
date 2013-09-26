@@ -12,6 +12,7 @@ REPO  = ENV['GITHUB_REPO'] || "metasploit-framework"
 def open_pull_requests
   numbers = []
   specs = []
+  libs = []
   idx = 1
   more = true
   while more
@@ -27,14 +28,23 @@ def open_pull_requests
       numbers << pr["number"].to_i
       # patches << pr["patch"]
       this_pr_files = get_patch_files(pr["patch_url"])
+      if (this_pr_files.select {|f| f =~ /^lib/}).size > 0
+        libs << pr["number"].to_i
+        puts "Has lib: #{pr["number"]}"
+      end
       if (this_pr_files.select {|f| f =~ /^spec/}).size > 0
         specs << pr["number"].to_i
         puts "Has spec: #{pr["number"]}"
       end
     end
+    $stdout.flush
   end
   puts "Total: #{numbers.size}"
-  numbers.sort.map {|n| specs.include?(n)? "#{n} *" : n.to_s}
+  numbers.sort.map do |pr|
+    is_spec = specs.include? pr
+    is_lib = libs.include? pr
+    "#{pr} #{is_spec ? "S" : ""}#{is_lib ? "L" : ""}"
+  end
 end
 
 def get_patch_files(uri)
@@ -55,5 +65,5 @@ def get_patch_files(uri)
   end
   files
 end
-  
+
 puts open_pull_requests.join("\n")
