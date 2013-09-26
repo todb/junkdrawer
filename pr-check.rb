@@ -30,7 +30,7 @@ def open_pull_requests
       this_pr_files = get_patch_files(pr["patch_url"])
       if (this_pr_files.select {|f| f =~ /^lib/}).size > 0
         libs << pr["number"].to_i
-        puts "Has lib: #{pr["number"]}"
+        puts "Has lib:  #{pr["number"]}"
       end
       if (this_pr_files.select {|f| f =~ /^spec/}).size > 0
         specs << pr["number"].to_i
