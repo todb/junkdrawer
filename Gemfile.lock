@@ -1,0 +1,12 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    fattr (2.2.1)
+    terminator (1.0.0)
+      fattr (>= 2.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  terminator
