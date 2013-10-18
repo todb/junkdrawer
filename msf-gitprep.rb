@@ -27,7 +27,7 @@ class GitInfo
   attr_reader :origin_url, :repo, :uri_handler
 
   def initialize
-    set_origin
+    set_origin_url
     set_repo
     set_uri_handler
   end
@@ -36,7 +36,7 @@ class GitInfo
     @remote_v ||= %x{git remote -v}
   end
 
-  def set_origin
+  def set_origin_url
     remote_v =~ /^origin(.*)\(push\)$/
     @origin_url = $1.strip
   end
@@ -55,7 +55,7 @@ class GitInfo
   end
 
   def add_upstream
-    return if @remote_v =~ /upstream\s.*github\.com\/rapid7\/#{@repo}/
+    return if @remote_v =~ /upstream\s.*rapid7\/#{@repo}/
     puts "Adding upstream repo."
     %x{git remote add upstream #{@uri}rapid7/#{@repo}}
   end
