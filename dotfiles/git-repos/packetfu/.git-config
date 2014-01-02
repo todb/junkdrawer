@@ -1,0 +1,17 @@
+[user]
+  name  = Tod Beardsley
+  email = todb@packetfu.com
+[github]
+  user = todb
+[core]
+  repositoryformatversion = 0
+  filemode = true
+  bare = false
+  logallrefupdates = true
+[remote "origin"]
+  fetch = +refs/heads/*:refs/remotes/origin/*
+  fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
+  url = github_todb:todb/packetfu
+[branch "master"]
+  remote = origin
+  merge = refs/heads/master

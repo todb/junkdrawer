@@ -1,0 +1,41 @@
+# This populates metasploit-framework/git/config, and adds
+# Metasploit-specific configurations on top of my regular
+# $HOME/.gitconfig -- namely, things for module stats, and ensure I use
+# my company e-mail address for my commits.
+[user]
+  email = tod_beardsley@rapid7.com
+
+[core]
+  repositoryformatversion = 0
+  filemode = true
+  bare = false
+  logallrefupdates = true
+
+[alias]
+  # Add a remote repo for Metasploit Framework.
+  remote-add-msf = !"git remote add -f $1 git://github.com/$1/metasploit-framework.git"
+  # Figure out what Metasploit modules are new between two tags,
+  # branches, commits, etc. Eg: git newmods 4.6.0 4.7.0
+  newmods = !"git diff --summary $1..$2 | grep \"create mode.* modules\" | sed \"s/create mode ...... //\" | sort | uniq; #"
+  # Get commits statistics on new modules between two commit points.
+  module-stats = !"for i in `git diff --summary $1 $2 | grep \"create mode.* modules\" | cut -f 5 -d ' '`; do wc -l $i; git blame -e --show-name $i | cut -d ')' -f 1 | cut -d '(' -f 2 | cut -d ' ' -f 1 | sort -i | uniq -c | sort -rn ; echo '---'; echo ''; done #"
+  # Assumes a local prerelease and release branch exists -- release is
+  # the last branch, and prerelease will become the next release branch.
+  prerelease =!"git diff release prerelease > details.diff ; git diff --name-only release prerelease > names.txt;  git diff --summary release prerelease > summary.txt; gvim details.diff names.txt summary.txt"
+
+[remote "origin"]
+  fetch = +refs/heads/*:refs/remotes/origin/*
+  fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
+  url = github-r7:todb-r7/metasploit-framework
+[remote "upstream"]
+  fetch = +refs/heads/*:refs/remotes/upstream/*
+  fetch = +refs/pull/*/head:refs/remotes/upstream/pr/*
+  url = github-r7:rapid7/metasploit-framework
+[remote "todb-r7"]
+  fetch = +refs/heads/*:refs/remotes/todb-r7/*
+  fetch = +refs/pull/*/head:refs/remotes/todb-r7/pr/*
+  url = github-r7:todb-r7/metasploit-framework
+[remote "rapid7"]
+  fetch = +refs/heads/*:refs/remotes/rapid7/*
+  fetch = +refs/pull/*/head:refs/remotes/rapid7/pr/*
+  url = github-r7:rapid7/metasploit-framework
