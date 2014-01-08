@@ -1,5 +1,11 @@
 #!/usr/bin/env ruby
 
+# Checks the PFS (Perfect Forward Secrecy) status of a given website.
+#
+# For background, see:
+#
+# http://news.netcraft.com/archives/2013/06/25/ssl-intercepted-today-decrypted-tomorrow.html
+
 require 'open3'
 require 'socket'
 require 'terminator'
