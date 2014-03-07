@@ -9,13 +9,13 @@ s = HTTPServer.new(:Port => port, :DocumentRoot => Dir.pwd)
 s.mount_proc '/upload' do |request, response|
   request.query.collect do |k,v|
     if k == "filename"
-      @fname = v.strip
+      @fname = "#{Time.now.to_f}-#{v}".strip
     end
     if k == "filedata"
-      @fsize = File.open(File.join(Dir.pwd, "#{Time.now.to_f}-#{@fname}"), "wb") {|f| f.write v}
+      @fsize = File.open(File.join(Dir.pwd, "#{@fname}"), "wb") {|f| f.write v}
     end
   end
-  response.body = "<html>Got #{@fname} (#{@fsize bytes}) <a href='up'>do it again</a></html>"
+  response.body = "<html>Got #{@fname} #{@fsize} bytes <a href='up'>do it again</a></html>"
 end
 
 s.mount_proc '/up' do |request, response|
