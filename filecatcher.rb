@@ -4,18 +4,22 @@ require 'webrick'
 require 'stringio'
 include WEBrick
 port = ENV['HTTP_PORT'] || 8080
-s = HTTPServer.new(:Port => port, :DocumentRoot => Dir.pwd)
+dir  = ENV['HTTP_DIR']  || Dir.pwd
+s = HTTPServer.new(:Port => port, :DocumentRoot => dir)
 
 s.mount_proc '/upload' do |request, response|
   request.query.collect do |k,v|
     if k == "filename"
       @fname = "#{Time.now.to_f}-#{v}".strip
+      @fname = File.join(dir,@fname)
     end
     if k == "filedata"
-      @fsize = File.open(File.join(Dir.pwd, "#{@fname}"), "wb") {|f| f.write v}
+      @fsize = File.open(@fname, "wb") {|f| f.write v}
     end
   end
-  response.body = "<html>Got #{@fname} #{@fsize} bytes <a href='up'>do it again</a></html>"
+  msg = "Got #{@fname} (#{@fsize} bytes)"
+  response.body = "<html>#{msg}<br><a href='up'>do it again</a></html>"
+
 end
 
 s.mount_proc '/up' do |request, response|
