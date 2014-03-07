@@ -3,7 +3,7 @@
 require 'webrick'
 require 'stringio'
 include WEBrick
-port = ENV['HTTP_PORT'] || 8080
+port = ENV['HTTP_PORT'] || 8081
 dir  = ENV['HTTP_DIR']  || Dir.pwd
 s = HTTPServer.new(:Port => port, :DocumentRoot => dir)
 
