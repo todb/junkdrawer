@@ -4,7 +4,7 @@ require 'webrick'
 require 'stringio'
 include WEBrick
 port = ENV['HTTP_PORT'] || 8081
-dir  = ENV['HTTP_DIR']  || Dir.pwd
+dir  = ENV['HTTP_DIR']  || File.join(Dir.pwd, "loot")
 s = HTTPServer.new(:Port => port, :DocumentRoot => dir)
 
 s.mount_proc '/upload' do |request, response|
