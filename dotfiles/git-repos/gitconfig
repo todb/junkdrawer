@@ -75,7 +75,7 @@
   noff = merge --no-ff
   # Merge (not signed) with fast-forwarding
   ff = merge --ff-only
-  # Sync all remote upstream branches locally (discarind local changes).
+  # Sync all remote upstream branches locally (discarding local changes).
   branch-sync-upstream = !"for remote in `git branch -r | grep -e \"[[:space:]]upstream\" | grep -v \"upstream/master$\"`; do git checkout --track $remote ; git reset HEAD --hard; git checkout master; git wipe; done"
   # Display the branch I'm on now, used in some shell functions
   branch-current = rev-parse --abbrev-ref HEAD
