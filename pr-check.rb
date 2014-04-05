@@ -26,6 +26,8 @@ def open_pull_requests
     puts "Fetched #{json_doc.size} PRs"
     json_doc.each do |pr|
       numbers << pr["number"].to_i
+      $stdout.puts "Checking #{numbers.last}"
+      $stdout.flush
       # patches << pr["patch"]
       this_pr_files = get_patch_files(pr["patch_url"])
       if (this_pr_files.select {|f| f =~ /^lib/}).size > 0
@@ -57,6 +59,7 @@ def get_patch_files(uri)
     return files
   end
   doc.each_line do |line|
+    line.force_encoding("BINARY")
     in_files = !in_files if (line =~ /^---$/ or line =~ / [0-9]+ file/)
     next unless in_files
     files << line.strip
