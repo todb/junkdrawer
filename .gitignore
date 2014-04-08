@@ -16,3 +16,8 @@ tmp
 .yardoc
 _yardoc
 doc/
+
+# msf-stats artifacts
+msf-stats/*.diff
+msf-stats/names.txt
+msf-stats/summary.txt
