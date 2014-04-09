@@ -4,8 +4,8 @@
 # accurate PID information). Tested on Debian-derived linuces.
 #
 # Example:
-# [sudo] password for todb:
 # $ ./cardio.sh
+# [sudo] password for todb:
 # /opt/google/talkplugin/GoogleTalkPlugin: 1.0.1e 11 Feb 2013
 # /usr/lib/postgresql/9.1/bin/postgres: 1.0.0
 # /usr/lib/vmware/bin/vmware-hostd:
