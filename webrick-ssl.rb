@@ -4,6 +4,10 @@
 # Examples:
 #   ./webrick-ssl.rb # Binds 0.0.0.0:8443, serving local dir
 #   ./webrisk-ssl.rb 443 /tmp/docroot # binds 443 to /tmp/docroot
+#
+# Sources:
+# https://help.ubuntu.com/10.04/serverguide/certificates-and-security.html
+# https://www.networkworld.com/columnists/2007/090507-dr-internet.html
 
 require 'webrick'
 require 'webrick/https'
