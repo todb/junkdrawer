@@ -1,13 +1,30 @@
 #!/usr/bin/env ruby
 
 # Takes arguments of port and root, binds an SSL webserver on 0.0.0.0
+#
 # Examples:
 #   ./webrick-ssl.rb # Binds 0.0.0.0:8443, serving local dir
 #   ./webrisk-ssl.rb 443 /tmp/docroot # binds 443 to /tmp/docroot
 #
+# Test for Heartbleed:
+#
+# $ ./msfcli auxiliary/scanner/ssl/openssl_heartbleed RHOSTS=192.168.145.142 RPORT=8443 VERBOSE=true E
+# [*] Initializing modules...
+# RHOSTS => 192.168.145.142
+# RPORT => 8443
+# VERBOSE => true
+# [*] 192.168.145.142:8443 - Sending Client Hello...
+# [*] 192.168.145.142:8443 - Sending Heartbeat...
+# [*] 192.168.145.142:8443 - Heartbeat response, checking if there is data leaked...
+# [+] 192.168.145.142:8443 - Heartbeat response with leak
+# [*] 192.168.145.142:8443 - Printable info leaked: @SF%P{8vwF"F./A{f"!98532ED/Aos@sh.cvut.cz>  All rights reserved.= Licence  This program is licenced under the same licence as Ruby.  (See the file 'LICENCE'.)= Version  $Id: openssl.rb 32665 2011-07-25 06:38:44Z nahi $=endrequire 'openssl.so'require 'openssl/bn'require 'openssl/cipher'require 'openssl/config'require 'openssl/digest'require 'openssl/ssl-internal'require 'openssl/x509-internal'unJqpMhxgJ86_64-linux
+# [*] Scanned 1 of 1 hosts (100% complete)
+# [*] Auxiliary module execution completed
+
 # Sources:
 # https://help.ubuntu.com/10.04/serverguide/certificates-and-security.html
 # https://www.networkworld.com/columnists/2007/090507-dr-internet.html
+# https://metasploit.com/download
 
 require 'webrick'
 require 'webrick/https'
