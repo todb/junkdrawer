@@ -73,4 +73,5 @@ server = WEBrick::HTTPServer.new(
 Signal.trap(2) do
   server.shutdown
 end
+puts "[*] Starting #{$0} using ruby-#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL} ..."
 server.start
