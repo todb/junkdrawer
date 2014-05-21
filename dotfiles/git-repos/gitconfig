@@ -67,8 +67,8 @@
   slog = log --show-signature
   # Totally nuke the local master branch and create again from origin's.
   remaster =!"git branch -D temp && git checkout -b temp && git branch -D master && git checkout --track -b master origin/master"
-  # A pretty and short commit log
-  nicelog = log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cr) %C(bold blue)<%aE>%Creset'
+  # A pretty and short commit log which notes signed commits
+  nicelog = log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cr) %C(bold blue)<%aE>%Creset [%G?]'
   # Wipe out local changes and reset to the last local commit.
   wipe = reset --hard HEAD
   # Merge (not signed) without fast-forwarding
