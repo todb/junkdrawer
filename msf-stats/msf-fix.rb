@@ -72,7 +72,7 @@ def msf_modname(modname)
 end
 
 def msf_url(modname)
-  pre = "http://www.metasploit.com/modules/"
+  pre = "http://www.rapid7.com/db/modules/"
   pre + msf_modname(modname)
 end
 
