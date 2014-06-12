@@ -41,6 +41,7 @@ def open_pull_requests
     end
     $stdout.flush
   end
+  puts "========="
   puts "Total: #{numbers.size}"
   numbers.sort.map do |pr|
     is_spec = specs.include? pr

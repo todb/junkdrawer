@@ -91,4 +91,5 @@ Signal.trap(2) do
   server.shutdown
 end
 puts "[*] Starting #{$0} using ruby-#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL} ..."
+puts "[*] OpenSSL claims to be: #{OpenSSL::OPENSSL_VERSION}"
 server.start
