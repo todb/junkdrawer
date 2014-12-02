@@ -2,12 +2,12 @@
   # Who I usually am.
   name = Tod Beardsley
   # What e-mail address I usually use.
-  email = todb@metasploit.com
+  email = tod_beardsley@rapid7.com
   # Used for signing commits and merges. Signing is fun and hopefully
   # will be more useful in the future. This key corresponds with
   # todb@packetfu.com, todb@metasploit.com, and
   # tod_beardsley@rapid7.com.
-  signingkey = ADB9F193
+  signingkey = EA19CAAC
 [github]
   # What Github username I usually commit as.
   user = todb-r7
@@ -41,14 +41,21 @@
   whitespace=fix,-indent-with-non-tab
   excludesfile = /home/todb/.gitignore
 [alias]
-  # When syncing with a remote, try to be noninvasive.
-  refresh = pull --ff-only
+  # Get the current tracking branch
+  # tracking = !"git branch -vv | grep \* | sed s#.*\[\(.*\)[]].*#\1# | cut -f 1 -d :"
+  tracking = !"git branch -vv | grep \\* | sed 's#.*\\[\\(.*\\)[]].*#\\1#' | cut -f 1 -d :"
+  # Get the current tracking branch remote
+  tracking-remote = !"git tracking | cut -f 1 -d /"
+  # Death to "git pull"
+  refresh = !"git fetch $(git tracking-remote) && git rebase --preserve-merges"
+  # Fetch and rebase from the current tracking remote, preserving and re-signing local merges.
+  fetch-preserve-merges = !"git refresh && git nicelog -5 && \
+    git commit --amend -S; #"
+  # fetch-preserve-merges = !"git tracking-remote
   # [c]heckout [u]pstream [m]aster; switches branches and refreshes
   cum = !"git checkout upstream-master && git refresh"
-  # Publish is more serious than just "push" since it takes my
-  # upstream-master and pushes to remote's master. I never remember this
-  # syntax otherwise.
-  publish = push upstream upstream-master:master
+  # Publish is more serious than just "push".
+  publish = !"git fetch-preserve-merges && git push upstream upstream-master:master"
   # Shorthand commands to always sign (-S) and always edit the commit
   # message.
   m = merge -S --no-ff --edit
