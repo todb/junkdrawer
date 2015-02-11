@@ -10,7 +10,7 @@ data.each_line do |line|
   if line =~ /(PR #(\d+)):/
     whole_pr = $1
     pr_num = $2
-    newfile << line.gsub(whole_pr, "<a href='#{link}#{pr_num}>#{whole_pr}</a>")
+    newfile << line.gsub(whole_pr, "<a href='#{link}#{pr_num}'>#{whole_pr}</a>")
   else
     newfile << line
   end

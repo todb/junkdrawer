@@ -11,7 +11,7 @@ f = {
 f.each_pair do |k,v|
 	puts v.inspect
 end
-tags = %x{git tag | grep 2014 }.split(/\n/)
+tags = %x{git tag | grep 2015 }.split(/\n/)
 last_tag    = ARGV[0] || tags.last
 next_branch = ARGV[1] || "release"
 
