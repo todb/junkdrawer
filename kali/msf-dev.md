@@ -41,8 +41,9 @@ these can overwrite any local customization you might have, may have
 less secure defaults than you'd like, and other surprises. Use them
 only if you are very impatient and have done this all before.
 
-At the end of this document, there's a [[TLDR of TLDRs]]. You can't
-yet run it all at once and go away, but it's only a few copy-pastes away.
+At the end of this document, there's a [TLDR of TLDRs](#tldr-of-tldrs].
+You can't yet run it all at once and go off to lunch, but setup should
+now be only a few lightly edited copy-pastes away. <sup>*TODO: Ansible!*</sup>
 
 So let's get started!
 
