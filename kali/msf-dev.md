@@ -33,7 +33,8 @@ need a non-root account for Metasploit Framework development work.
 
 For this guide, the example user is "YOUR_USERNAME," and the sample
 password in this document is "YOUR_PASSWORD." Anywhere you see those
-strings, use your own username and password.
+strings, use your own username and password. Obviously, they should
+be hard.
 
 Each section will have a **TLDR** code snippet, suitable for
 copy-pasting, if you just want to speed through things. Note: many of
@@ -94,7 +95,7 @@ apt-get -y upgrade
 apt-get -y install ufw;
 ufw enable &&
 ufw allow 4444:4464/tcp &&
-ufw allow 8080:8090/tcp && 
+ufw allow 8080:8090/tcp &&
 ufw allow ssh &&
 service ssh start
 ```
@@ -122,7 +123,7 @@ ufw allow ssh && service ssh start # If you want to shell in from elsewhere
 ```bash
 useradd -m msfdev &&
 PASS=`tr -dc A-Za-z0-9_ < /dev/urandom | head -c8`;
-echo ** Your msfdev password is $PASS ** &&
+echo ** RECORD THIS: Your msfdev Kali user password is $PASS ** &&
 echo "msfdev:$PASS" | chpasswd &&
 unset PASS &&
 usermod -a -G sudo msfdev &&
@@ -148,7 +149,7 @@ Once this is complete, switch to this user by logging out of `root` and logging 
 
 ----
 ```bash
-sudo apt-get -y install \
+echo 'YOUR_PASSWORD_FOR_KALI' | sudo -kS apt-get -y install \
   build-essential zlib1g zlib1g-dev \
   libxml2 libxml2-dev libxslt-dev locate \
   libreadline6-dev libcurl4-openssl-dev git-core \
@@ -284,7 +285,7 @@ Host github
 EOF
 
 PASS=`tr -dc A-Za-z0-9_ < /dev/urandom | head -c8` &&
-echo ** Your SSH key password is $PASS ** &&
+echo ** RECORD THIS: Your SSH key password is $PASS ** &&
 ssh-keygen -t rsa -C "YOUR_USERNAME_FOR_EMAIL" -f $HOME/.ssh/id_rsa.github -N $PASS &&
 eval "$(ssh-agent -s)" &&
 ssh-add $HOME/.ssh/id_rsa.github &&
@@ -482,7 +483,6 @@ starts up on system start, as well.
 #### TLDR (as msfdev)
 
 ----
-
 ```
 echo 'YOUR_PASSWORD_FOR_KALI' | sudo -kS update-rc.d postgresql enable &&
 echo 'YOUR_PASSWORD_FOR_KALI' | sudo -S service postgresql start &&
@@ -664,7 +664,7 @@ missing anything important.
 If you'd like to get easy access to upstream pull requests on your
 command line -- and who wouldn't -- you need to add the appropriate
 fetch reference to your `.git/config`. This is done easily with the
-following, once [PR #5000][pr-5000] lands:
+following:
 
 ```
 tools/dev/add-pr-remote.rb
@@ -812,9 +812,207 @@ pr-url =!"xdg-open https://github.com/$(git config github.user)/$(basename $(git
 If you're very impatient, you can just cut and paste these sequentially,
 and you should have a good time. Someday, this will be normalized into a
 proper deploy script, but there are a bunch of passwords to deal with
-which is always a security adventure.
+which is always a security adventure. Again, you'll want to sub in your
+own username and password details.
 
-**TODO** actually list this!
+## Run these as root
+
+----
+```bash
+echo deb http://http.kali.org/kali kali main non-free contrib > /etc/apt/sources.list &&
+echo deb-src http://http.kali.org/kali kali main non-free contrib >> /etc/apt/sources.list &&
+echo deb http://security.kali.org/kali-security kali/updates main contrib non-free >> /etc/apt/sources.list &&
+apt-get clean &&
+rm -rf /var/lib/apt/lists;
+apt-get update &&
+apt-get -y --force-yes install kali-archive-keyring &&
+apt-get update &&
+apt-get -y upgrade
+```
+----
+
+----
+```bash
+apt-get -y install ufw;
+ufw enable &&
+ufw allow 4444:4464/tcp &&
+ufw allow 8080:8090/tcp &&
+ufw allow ssh &&
+service ssh start
+```
+----
+
+----
+```bash
+useradd -m msfdev &&
+PASS=`tr -dc A-Za-z0-9_ < /dev/urandom | head -c8`;
+echo ** RECORD THIS: Your msfdev Kali user password is $PASS ** &&
+echo "msfdev:$PASS" | chpasswd &&
+unset PASS &&
+usermod -a -G sudo msfdev &&
+chsh -s /bin/bash msfdev
+```
+----
+
+## Stop here, switch to `msfdev`
+
+----
+```bash
+echo 'YOUR_PASSWORD_FOR_KALI' | sudo -kS apt-get -y install \
+  build-essential zlib1g zlib1g-dev \
+  libxml2 libxml2-dev libxslt-dev locate \
+  libreadline6-dev libcurl4-openssl-dev git-core \
+  libssl-dev libyaml-dev openssl autoconf libtool \
+  ncurses-dev bison curl wget xsel postgresql \
+  postgresql-contrib libpq-dev \
+  libapr1 libaprutil1 libsvn1 \
+  libpcap-dev libsqlite3-dev
+```
+----
+
+----
+```bash
+curl -sSL https://rvm.io/mpapis.asc | gpg --import - &&
+curl -L https://get.rvm.io | bash -s stable --autolibs=enabled --ruby=2.1.5 &&
+source $HOME/.rvm/scripts/rvm &&
+ruby -v && # See that it's 2.1.5
+sudo gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults \
+  --type boolean --set /apps/gnome-terminal/profiles/Default/login_shell true
+```
+----
+
+----
+```
+echo 'YOUR_PASSWORD_FOR_KALI' | sudo -kS apt-get install vim-gnome -y &&
+curl -Lo- https://bit.ly/janus-bootstrap | bash
+```
+----
+
+----
+```bash
+mkdir -p $HOME/.ssh &&
+cat <<EOF>> $HOME/.ssh/config
+
+Host github
+  Hostname github.com
+  User git
+  StrictHostKeyChecking no
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/id_rsa.github
+
+EOF
+
+PASS=`tr -dc A-Za-z0-9_ < /dev/urandom | head -c8` &&
+echo ** RECORD THIS: Your SSH key password is $PASS ** &&
+ssh-keygen -t rsa -C "YOUR_USERNAME_FOR_EMAIL" -f $HOME/.ssh/id_rsa.github -N $PASS &&
+eval "$(ssh-agent -s)" &&
+ssh-add $HOME/.ssh/id_rsa.github &&
+PUBKEY_GIT=`cat $HOME/.ssh/id_rsa.github.pub` &&
+curl -u "YOUR_USERNAME_FOR_GITHUB:YOUR_PASSWORD_FOR_GITHUB" \
+  --data "{\"title\":\"msfdev-key\",\"key\":\"$PUBKEY_GIT\"}" \
+  https://api.github.com/user/keys &&
+history -c &&
+unset PUBKEY_GIT &&
+unset PASS &&
+ssh -T github
+```
+----
+
+----
+```bash
+curl -X POST -u "YOUR_USERNAME_FOR_GITHUB:YOUR_PASSWORD_FOR_GITHUB" \
+  https://api.github.com/repos/rapid7/metasploit-framework/forks &&
+history -c &&
+mkdir -p $HOME/git &&
+cd $HOME/git &&
+sleep 300 &&
+git clone github:YOUR_USERNAME_FOR_GITHUB/metasploit-framework &&
+cd metasploit-framework
+```
+----
+
+----
+```bash
+cd $HOME/git/metasploit-framework &&
+(BUNDLEJOBS=$(expr $(cat /proc/cpuinfo | grep vendor_id | wc -l) - 1) &&
+bundle config --global jobs $BUNDLEJOBS) &&
+bundle install &&
+./msfconsole -x exit
+```
+----
+
+----
+```
+echo 'YOUR_PASSWORD_FOR_KALI' | sudo -kS update-rc.d postgresql enable &&
+echo 'YOUR_PASSWORD_FOR_KALI' | sudo -S service postgresql start &&
+cat <<EOF> $HOME/pg-utf8.sql
+update pg_database set datallowconn = TRUE where datname = 'template0';
+\c template0
+update pg_database set datistemplate = FALSE where datname = 'template1';
+drop database template1;
+create database template1 with template = template0 encoding = 'UTF8';
+update pg_database set datistemplate = TRUE where datname = 'template1';
+\c template1
+update pg_database set datallowconn = FALSE where datname = 'template0';
+\q
+EOF
+sudo -u postgres psql -f $HOME/pg-utf8.sql &&
+sudo -u postgres createuser msfdev -dRS &&
+sudo -u postgres psql -c \
+  "ALTER USER msfdev with ENCRYPTED PASSWORD 'YOUR_PASSWORD_FOR_PGSQL';" &&
+sudo -u postgres createdb --owner msfdev msf_dev_db &&
+sudo -u postgres createdb --owner msfdev msf_test_db &&
+cat <<EOF> $HOME/.msf4/database.yml
+# Development Database
+development: &pgsql
+  adapter: postgresql
+  database: msf_dev_db
+  username: msfdev
+  password: YOUR_PASSWORD_FOR_PGSQL
+  host: localhost
+  port: 5432
+  pool: 5
+  timeout: 5
+
+# Production database -- same as dev
+production: &production
+  <<: *pgsql
+
+# Test database -- not the same, since it gets dropped all the time
+test:
+  <<: *pgsql
+  database: msf_test_db
+EOF
+```
+----
+
+----
+```bash
+cd $HOME/git/metasploit-framework &&
+./msfconsole -qx "db_status; exit" &&
+rake spec
+```
+----
+
+----
+```bash
+cd $HOME/git/metasploit-framework &&
+git remote add upstream github:rapid7/metasploit-framework.git &&
+git fetch upstream &&
+git checkout -b upstream-master --track upstream/master &&
+ruby tools/dev/add-pr-remote.rb &&
+git config --global user.name  "YOUR_USERNAME_FOR_REAL_LIFE" &&
+git config --global user.email "YOUR_USERNAME_FOR_EMAIL"
+```
+----
+
+That's it! It's still on you to set up your shell aliases, git aliases,
+and PGP key for signing commits if you ever care to land things, but
+other than that, you're good to go.
+
+Again, if there are any errors, omissions, or better ways to do any of
+these things, by all means, open an [issue][issues] and we'll see about
+updating this HOWTO.
 
 [contribute]:http://r-7.co/MSF-CONTRIB
 [issues]:https://github.com/rapid7/metasploit-framework/issues
