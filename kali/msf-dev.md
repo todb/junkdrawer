@@ -10,10 +10,9 @@ be able to get away with different Gnome Terminal profiles, but you're
 not running out of UIDs, I promise. At the very least, you're going to
 need a non-root account for Metasploit Framework development work.
 
-For this guide, the example user is "mcfakepants." Don't try to be him
-on GitHub, or clone his stuff. Use your own identity. The sample
-password in this document is "YOUR_PASSWORD." Anywhere you see that
-string, use your own password.
+For this guide, the example user is "YOUR_USERNAME," and the sample
+password in this document is "YOUR_PASSWORD." Anywhere you see those
+strings, use your own username and password.
 
 Each section will have a **TLDR** code snippet, suitable for
 copy-pasting, if you just want to speed through things. Note: many of
@@ -85,7 +84,11 @@ service ssh start
 ```
 ----
 
-Often, you need to have remote access back to your Kali machine; a typical use case is for reverse shells. You might also want to use ssh and scp to write code and copy files, from elsewhere -- this is especially useful if you're running Kali as a guest OS and don't want to install VMWare Tools.
+Often, you need to have remote access back to your Kali machine;
+a typical use case is for reverse shells. You might also want to
+use ssh and scp to write code and copy files, from elsewhere --
+this is especially useful if you're running Kali as a guest OS
+and don't want to install VMWare Tools.
 
 ```
 apt-get -y install ufw
@@ -137,7 +140,7 @@ sudo apt-get -y install \
   ncurses-dev bison curl wget xsel postgresql \
   postgresql-contrib libpq-dev \
   libapr1 libaprutil1 libsvn1 \
-  libpcap-dev libsqlite3-dev xsel
+  libpcap-dev libsqlite3-dev
 ```
 ----
 
@@ -155,7 +158,8 @@ curl -sSL https://rvm.io/mpapis.asc | gpg --import - &&
 curl -L https://get.rvm.io | bash -s stable --autolibs=enabled --ruby=2.1.5 &&
 source $HOME/.rvm/scripts/rvm &&
 ruby -v && # See that it's 2.1.5
-sudo gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults --type boolean --set /apps/gnome-terminal/profiles/Default/login_shell true
+sudo gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults \
+  --type boolean --set /apps/gnome-terminal/profiles/Default/login_shell true
 ```
 ----
 
@@ -265,11 +269,12 @@ EOF
 
 PASS=`tr -dc A-Za-z0-9_ < /dev/urandom | head -c8` &&
 echo ** Your SSH key password is $PASS ** &&
-ssh-keygen -t rsa -C "mcfakepants@packetfu.com" -f $HOME/.ssh/id_rsa.github -N $PASS &&
+ssh-keygen -t rsa -C "YOUR_USERNAME_FOR_EMAIL" -f $HOME/.ssh/id_rsa.github -N $PASS &&
 eval "$(ssh-agent -s)" &&
 ssh-add $HOME/.ssh/id_rsa.github &&
 PUBKEY_GIT=`cat $HOME/.ssh/id_rsa.github.pub` &&
-curl -u "mcfakepants:YOUR_PASSWORD_FOR_GITHUB" --data "{\"title\":\"msfdev-key\",\"key\":\"$PUBKEY_GIT\"}" \
+curl -u "YOUR_USERNAME_FOR_GITHUB:YOUR_PASSWORD_FOR_GITHUB" \
+  --data "{\"title\":\"msfdev-key\",\"key\":\"$PUBKEY_GIT\"}" \
   https://api.github.com/user/keys &&
 history -c &&
 unset PUBKEY_GIT &&
@@ -278,17 +283,33 @@ ssh -T github
 ```
 ----
 
-The easiest way we've found to interact with GitHub is over SSH, using a custom SSH key. This saves us the trouble of typing passwords over HTTPS connections all the time. So, read the [generating-ssh-keys] article on GitHub and follow those instructions, or just perform the steps in the TLDR, above.
+The easiest way we've found to interact with GitHub is over
+SSH, using a custom SSH key. This saves us the trouble of
+typing passwords over HTTPS connections all the time. So,
+read the [generating-ssh-keys] article on GitHub and follow
+those instructions, or just perform the steps in the TLDR,
+above.
 
-Note, the above will save your GitHub password in your local history file, so you might want to modify the `curl -u` to just your username and get prompted for it. Also, you'll want to set decent passwords for your GitHub account and your local SSH key.
+Note, the above will save your GitHub password in your local
+history file, so you might want to modify the `curl -u` to
+just your username and get prompted for it. Also, you'll want
+to set decent passwords for your GitHub account and your local
+SSH key.
 
 <blockquote>
-Note, if you already have two-factor authentication (aka, 2FA) enabled, you will get a JSON-formatted error message of "Must specify two-factor authentication OTP code." In that case, you'll want to just navigate to https://github.com/settings/ssh and add your key manually via the web interface.
+Note, if you already have two-factor authentication (aka, 2FA)
+enabled, you will get a JSON-formatted error message of "Must
+specify two-factor authentication OTP code." In that case,
+you'll want to just navigate to
+https://github.com/settings/ssh and add your key manually via
+the web interface.
 </blockquote>
 
 ## Create an .ssh/config entry for Github
 
-One you have your new SSH key all set up, add this to your $HOME/.ssh/config -- create that file if you don't have one already.
+One you have your new SSH key all set up, add this to your
+$HOME/.ssh/config -- create that file if you don't have one
+already.
 
 ```
 Host github
@@ -304,10 +325,11 @@ Test it:
 ```
 ssh -T git@github.com
 Warning: Permanently added 'github.com,192.30.252.130' (RSA) to the list of known hosts.
-Hi mcfakepants! You've successfully authenticated, but GitHub does not provide shell access.
+Hi YOUR_USERNAME_FOR_GITHUB! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 
-Okay! You're all set to fork and clone Metasploit Framework. How exciting for you!
+Okay! You're all set to fork and clone Metasploit Framework.
+How exciting for you!
 
 # Fork and Clone Metasploit-Framework
 
@@ -315,27 +337,34 @@ Okay! You're all set to fork and clone Metasploit Framework. How exciting for yo
 
 ----
 ```bash
-curl -X POST -u "mcfakepants:YOUR_PASSWORD_FOR_GITHUB" \
+curl -X POST -u "YOUR_USERNAME_FOR_GITHUB:YOUR_PASSWORD_FOR_GITHUB" \
   https://api.github.com/repos/rapid7/metasploit-framework/forks &&
 history -c &&
 mkdir -p $HOME/git &&
 cd $HOME/git &&
 sleep 300 &&
-git clone github:mcfakepants/metasploit-framework &&
+git clone github:YOUR_USERNAME_FOR_GITHUB/metasploit-framework &&
 cd metasploit-framework
 ```
 ----
 
-The TLDR is nice in that it's all command-line. However, you can do all this just as easily in the web UI (and again, if you have 2FA enabled, you must use the web UI). Just follow the [forking] instructions provided by GitHub.
+The TLDR is nice in that it's all command-line. However, you
+can do all this just as easily in the web UI (and again, if
+you have 2FA enabled, you must use the web UI). Just follow
+the [forking] instructions provided by GitHub.
 
 ## Clone
 
-One you have a fork on GitHub, it's time to pull it down to your local dev machine. Again, you'll want to follow the [cloning] instructions at GitHub, except instead of using `https://github.com/username/repo`, you'll be using your ssh alias, `github:username/repo`, like so:
+One you have a fork on GitHub, it's time to pull it down to your
+local dev machine. Again, you'll want to follow the [cloning]
+instructions at GitHub, except instead of using
+`https://github.com/username/repo`, you'll be using your ssh
+alias, `github:username/repo`, like so:
 
 ```
 mkdir -p $HOME/git
 cd $HOME/git
-git clone github:mcfakepants/metasploit-framework
+git clone github:YOUR_USERNAME_FOR_GITHUB/metasploit-framework
 cd metasploit-framework
 ```
 
@@ -353,7 +382,12 @@ bundle install &&
 ```
 ----
 
-Metasploit has loads of gems (Ruby libraries) that it depends on. Because you're using RVM, though, you can install them locally and not worry about conflicting with Debian-packaged gems, thanks to the magic of [Bundler]. First, you want to set bundler up to take advantage of your available cores -- ideally, your number of CPUs minus one. That can be accomplished by:
+Metasploit has loads of gems (Ruby libraries) that it depends
+on. Because you're using RVM, though, you can install them
+locally and not worry about conflicting with Debian-packaged
+gems, thanks to the magic of [Bundler]. First, you want to set
+bundler up to take advantage of your available cores -- ideally,
+your number of CPUs minus one. That can be accomplished by:
 
 ```
 (BUNDLEJOBS=$(expr $(cat /proc/cpuinfo | grep vendor_id | wc -l) - 1) &&
@@ -367,7 +401,8 @@ cd $HOME/git/metasploit-framework/
 bundle install
 ```
 
-After a minute or two, you're all set to start Metasploiting. In your checkout directory, type:
+After a minute or two, you're all set to start Metasploiting. In
+your checkout directory, type:
 
 ```
 ./msfconsole
@@ -415,11 +450,16 @@ plugins
 msf > exit
 ```
 
-Alas, though, you have no database set up to use all this hacking madness. Easily solved, though!
+Alas, though, you have no database set up to use all this
+hacking madness. Easily solved, though!
 
 # Set up PostgreSQL
 
-Kali linux already ships with Postgresql, so we can use that out of the gate. Everything should just work on Ubuntu and other Debian-based distros, assuming they have an equivalent `postgresql` package. The TLDR ensures that the database is starts up on system start, as well.
+Kali linux already ships with Postgresql, so we can use that
+out of the gate. Everything should just work on Ubuntu and
+other Debian-based distros, assuming they have an equivalent
+`postgresql` package. The TLDR ensures that the database is
+starts up on system start, as well.
 
 ## Start the database
 
@@ -443,7 +483,8 @@ update pg_database set datallowconn = FALSE where datname = 'template0';
 EOF
 sudo -u postgres psql -f $HOME/pg-utf8.sql &&
 sudo -u postgres createuser msfdev -dRS &&
-sudo -u postgres psql -c "ALTER USER msfdev with ENCRYPTED PASSWORD 'YOUR_PASSWORD_FOR_PGSQL';" &&
+sudo -u postgres psql -c \
+  "ALTER USER msfdev with ENCRYPTED PASSWORD 'YOUR_PASSWORD_FOR_PGSQL';" &&
 sudo -u postgres createdb --owner msfdev msf_dev_db &&
 sudo -u postgres createdb --owner msfdev msf_test_db &&
 cat <<EOF> $HOME/.msf4/database.yml
@@ -470,13 +511,18 @@ EOF
 ```
 ----
 
-On Kali Linux, postgresql (and any other listening service) isn't enabled by default. This is a fine security and resource precaution, but if you're expecting it there all the time, feel free to auto-start it:
+On Kali Linux, postgresql (and any other listening service)
+isn't enabled by default. This is a fine security and
+resource precaution, but if you're expecting it there all the
+time, feel free to auto-start it:
 
 ```
 update-rc.d postgresql enable
 ```
 
-Next, switch to the postgres user to perform a little database maintenance to fix the default encoding (helpfully provided in [@ffmike's gist][ffmike-gist]).
+Next, switch to the postgres user to perform a little database
+maintenance to fix the default encoding (helpfully provided in
+[@ffmike's gist][ffmike-gist]).
 
 ```
 sudo -sE su postgres
@@ -505,7 +551,8 @@ exit                                 # Become msfdev again
 
 ## Create the database.yml
 
-Now that yourself again, create a file `$HOME/.msf4/database.yml` with the following:
+Now that yourself again, create a file `$HOME/.msf4/database.yml`
+with the following:
 
 ```yaml
 # Development Database
@@ -529,7 +576,8 @@ test:
   database: msf_test_db
 ```
 
-The next time you start `./msfconsole`, the development database will be created. Check with:
+The next time you start `./msfconsole`, the development database
+will be created. Check with:
 
 ```
 ./msfconsole -qx "db_status; exit"
@@ -537,13 +585,15 @@ The next time you start `./msfconsole`, the development database will be created
 
 # Run specs
 
-We use [rspec](http://betterspecs.org/) for most Framework testing. Make sure it works for you:
+We use [rspec](http://betterspecs.org/) for most Framework testing.
+Make sure it works for you:
 
 ```
 rake spec
 ```
 
-You should see over 9000 tests run, mostly resulting in green dots, a few in yellow stars, and no red errors.
+You should see over 9000 tests run, mostly resulting in green dots,
+a few in yellow stars, and no red errors.
 
 # Git setup
 
@@ -556,8 +606,8 @@ git remote add upstream github:rapid7/metasploit-framework.git &&
 git fetch upstream &&
 git checkout -b upstream-master --track upstream/master &&
 ruby tools/dev/add-pr-remote.rb &&
-git config --global user.name  "Fakey McFakepants" &&
-git config --global user.email "fakey@packetfu.com"
+git config --global user.name  "YOUR_USERNAME_FOR_REAL_LIFE" &&
+git config --global user.email "YOUR_USERNAME_FOR_EMAIL"
 ```
 ----
 
@@ -577,8 +627,8 @@ Now, you have a branch that points to upstream (the `rapid7` fork)
 that's different from your own fork (the original `master` branch that
 points to `origin/master`). You might find having `upstream-master` and
 `master` being different branches handy (especially if you are a
-[Metasploit committer][metasploit-committer], since this makes it less likely to
-accidentally push to `rapid7/master`).
+[Metasploit committer][metasploit-committer], since this makes it less
+likely to accidentally push to `rapid7/master`).
 
 <blockquote>
 Note: Kali ships with git 1.7.10, so you might consider updating to
@@ -654,8 +704,8 @@ Finally, if you ever want to contribute to Metasploit, you need to
 configure at least your username and e-mail address, like so:
 
 ```
-git config user.name "Fakey McFakepants"
-git config user.email "fakey@packetfu.com"
+git config user.name  "YOUR_USERNAME_FOR_REAL_LIFE"
+git config user.email "YOUR_USERNAME_FOR_EMAIL"
 ```
 
 If you want this to be your default name for any other git repo you use,
