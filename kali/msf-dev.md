@@ -1,7 +1,28 @@
-# Kali Linux for MSF-DEV
+# MSF-DEV
 
-We used to say that Kali Linux was no bueno for development work. That's
-changed, though with one small caveat about separate users.
+This is a guide for setting up an environment for effectively **contributing
+to the Metasploit Framework**. If you just want to use Metasploit for
+legal, authorized hacking, we recommend instead you [download the Metasploit
+binary installer](http://metasploit.com/download), which will take care of
+all the dependencies and give you access to the open source Metasploit
+Framework, the free Metasploit Community edition, and an option to start
+the free trial for Metasploit Pro.
+
+If you're using Kali Linux, Metasploit is already pre-installed for
+non-development purposes; just type `msfconsole` in the terminal to
+start Metasploit Framework, then type `go_pro` if you'd like to try
+Metasploit Pro or Metasploit Community.
+
+If you want to develop on and [contribute] to Metasploit, read on!
+This guide should get you going on pretty much any Debian-based
+Linux system, but it is written for Kali Linux in particular,
+since many, many Metasploit Users are also Kali Linux users, and
+why spin up a different VM?
+
+If you're familiar with Ubuntu or Xandros or any other Debian
+distro, you should be able to read along here and get it to
+work for you. If there are distro-specific gotchas you spot,
+please [let us know][issues]!
 
 If you would like to sometimes develop Metasploit-Framework, and
 sometimes just use the Metasploit Community Edition which ships with
@@ -17,19 +38,13 @@ strings, use your own username and password.
 Each section will have a **TLDR** code snippet, suitable for
 copy-pasting, if you just want to speed through things. Note: many of
 these can overwrite any local customization you might have, may have
-less secure defaults than you'd like, and other gotchas. Use them only
-if you are very impatient and have done this all before.
+less secure defaults than you'd like, and other surprises. Use them
+only if you are very impatient and have done this all before.
 
-- [ ] Update Kali
-- [ ] Set up remote access
-- [ ] Create a user
-- [ ] Install the development dependencies
-- [ ] Bundle install the Ruby gems
-- [ ] Fork and Clone Metasploit-Framework
-- [ ] Configure the database
-- [ ] Sign your commits
-- [ ] Add some shell aliases
-- [ ] TLDR of TLDRs
+At the end of this document, there's a [TLDR-of-TLDRs][tldrs]. You can't
+yet run it all at once and go away, but it's only a few copy-pastes away.
+
+So let's get started!
 
 # Keep Kali up to date
 
@@ -800,7 +815,8 @@ which is always a security adventure.
 
 **TODO** actually list this!
 
-
+[contribute]:http://r-7.co/MSF-CONTRIB
+[issues]:https://github.com/rapid7/metasploit-framework/issues
 [ffmike-gist]: https://gist.github.com/ffmike/877447
 [kali-sources]: http://docs.kali.org/general-use/kali-linux-sources-list-repositories
 [gitconfig]:https://github.com/todb-r7/junkdrawer/blob/master/dotfiles/git-repos/gitconfig
@@ -816,5 +832,4 @@ which is always a security adventure.
 [signing-howto]:https://github.com/rapid7/metasploit-framework/wiki/Committer-Keys#signing-howto
 [landing-prs]:https://github.com/rapid7/metasploit-framework/wiki/Landing-Pull-Requests
 [todb]:https://github.com/todb-r7
-[pr-5000]:https://github.com/rapid7/metasploit-framework/pull/5000
 [gh-pr-refs]:https://help.github.com/articles/checking-out-pull-requests-locally/
