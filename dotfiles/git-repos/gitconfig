@@ -1,6 +1,6 @@
 [user]
-	name = Tod Beardsley
-	email = tod_beardsley@rapid7.com
+  name = Tod Beardsley
+  email = tod_beardsley@rapid7.com
   signingkey = EA19CAAC
 
 [github]
