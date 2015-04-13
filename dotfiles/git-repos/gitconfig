@@ -1,28 +1,25 @@
 [user]
-  # Who I usually am.
-  name = Tod Beardsley
-  # What e-mail address I usually use.
-  email = tod_beardsley@rapid7.com
-  # Used for signing commits and merges. Signing is fun and hopefully
-  # will be more useful in the future. This key corresponds with
-  # todb@packetfu.com, todb@metasploit.com, and
-  # tod_beardsley@rapid7.com.
+	name = Tod Beardsley
+	email = tod_beardsley@rapid7.com
   signingkey = EA19CAAC
+
 [github]
-  # What Github username I usually commit as.
   user = todb-r7
+
 [core]
-  # Make sure this editor blocks the terminal (unlike gvim),
-  # otherwise commit # messages will be ignored.
   editor = /usr/bin/vim
+  whitespace=fix,-indent-with-non-tab
+  excludesfile = $HOME/.gitignore
+
 [merge]
   tool = gvimdiff
+
 [push]
-  # 'git push' should only hit this branch, not all. Why this isn't
-  # default?
   default = current
+
+# All this coloring makes life so much nicer.
+
 [color]
-  # All this coloring makes life so much nicer.
   branch = auto
 [color "branch"]
   current = yellow reverse
@@ -37,64 +34,27 @@
   ui = true
 [color "diff"]
   whitespace = red reverse
-[core]
-  whitespace=fix,-indent-with-non-tab
-  excludesfile = /home/todb/.gitignore
+
 [alias]
-  # Get the current tracking branch
-  # tracking = !"git branch -vv | grep \* | sed s#.*\[\(.*\)[]].*#\1# | cut -f 1 -d :"
-  tracking = !"git branch -vv | grep \\* | sed 's#.*\\[\\(.*\\)[]].*#\\1#' | cut -f 1 -d :"
-  # Get the current tracking branch remote
-  tracking-remote = !"git tracking | cut -f 1 -d /"
-  # Death to "git pull"
-  refresh = !"git fetch $(git tracking-remote) && git rebase --preserve-merges"
-  # Fetch and rebase from the current tracking remote, preserving and re-signing local merges.
-  fetch-preserve-merges = !"git refresh && git nicelog -5 && \
-    git commit --amend -S; #"
-  # fetch-preserve-merges = !"git tracking-remote
-  # [c]heckout [u]pstream [m]aster; switches branches and refreshes
-  cum = !"git checkout upstream-master && git refresh"
-  # Publish is more serious than just "push".
-  publish = !"git fetch-preserve-merges && git push upstream upstream-master:master"
-  # Shorthand commands to always sign (-S) and always edit the commit
-  # message.
-  m = merge -S --no-ff --edit
-  c = commit -S --edit
-  # Shorthand to always blame without looking at just whitespace changes
-  b = blame -w
-  # Super handy way to create a local temp branch for testing merges.
-  temp = !"git branch -D temp; git checkout -b temp"
-  # Create and push a tag. Usually used for sprint tags like sprint-A01
-  tag-sprint=!"git tag -s $1 -m \"Tagging as $1\" && git push --tags upstream upstream-master:master && echo Tagged as"
-  # A gitk-like ASCII display.
-  lol = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-  # A slightly more useful gitlol that provides diff stats
-  lolstat = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --stat
-  # Show commit logs with signatures
-  slog = log --show-signature
-  # Totally nuke the local master branch and create again from origin's.
-  remaster =!"git branch -D temp && git checkout -b temp && git branch -D master && git checkout --track -b master origin/master"
-  # A pretty and short commit log which notes signed commits
-  nicelog = log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cr) %C(bold blue)<%aE>%Creset [%G?]'
-  # Wipe out local changes and reset to the last local commit.
-  wipe = reset --hard HEAD
-  # Merge (not signed) without fast-forwarding
-  noff = merge --no-ff
-  # Merge (not signed) with fast-forwarding
-  ff = merge --ff-only
-  # Sync all remote upstream branches locally (discarind local changes).
-  branch-sync-upstream = !"for remote in `git branch -r | grep -e \"[[:space:]]upstream\" | grep -v \"upstream/master$\"`; do git checkout --track $remote ; git reset HEAD --hard; git checkout master; git wipe; done"
-  # Display the branch I'm on now, used in some shell functions
-  branch-current = rev-parse --abbrev-ref HEAD
-  thisbranch = !"git branch-current"
-  # List all branches on <remote> that have made it to upstream master.
-  merged-branches-ls =!"git branch -r --merged upstream/master | grep $1 | grep -v -e $1/pr -e $1/master | sed s#^[[:space:]]*$1/## #" # Trailing comment on purpose
-  # Remove all branches on <remote> that have made it to upstream master.
-  merged-branches-rm =!"for b in `git merged-branches-ls $1`; do git push $1 :refs/heads/$b; done #"
-  # Create a local land-1234-some-feature-or-fix branch against upstream/pr/1234
-  land = !"git checkout upstream/pr/$1 && git checkout -b land-$1-$2 -t upstream/pr/$1; #" # Needs trailing comment
-  # Shorthand for land
-  l = !"git land"
-  # Usage: $1 is HISNAME, $2 is HISBRANCH
-  # Fixes from @kernelsmith, thanks!
-  pr-url =!"xdg-open https://github.com/$(git config github.user)/$(basename $(git rev-parse --show-toplevel))/pull/new/$1:$2...$(git branch-current) #"
+# An easy, colored oneline log format that shows signed/unsigned status
+nicelog = log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cr) %C(bold blue)<%aE>%Creset [%G?]'
+
+# Shorthand commands to always sign (-S) and always edit the commit message.
+m = merge -S --no-ff --edit
+c = commit -S --edit
+
+# Shorthand to always blame (praise) without looking at whitespace changes
+b= blame -w
+
+# Spin up a quick temp branch, because git stash is too spooky.
+temp = !"git branch -D temp; git checkout -b temp"
+
+# Gets the current branch
+branch-current =! "git branch | grep '*' | cut -f 2 -d ' '"
+
+# Gets the current base repo name
+  repo-current =! "basename $(git rev-parse --show-toplevel)"
+
+# Create a pull request in a web browser from the CLI. Usage: $1 is HISNAME, $2 is HISBRANCH
+# Fixes from @kernelsmith, thanks!
+pr-url =!"xdg-open https://github.com/$(git config github.user)/$(git repo-current)/pull/new/$1:$2...$(git branch-current) #"
