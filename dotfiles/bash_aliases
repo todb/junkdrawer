@@ -1,0 +1,24 @@
+# Generally, I try to stash everything non-standard in .bash_aliases
+# rather than .bashrc or .profile, since these will all get loaded
+# anyway.
+
+alias msfconsole="pushd $HOME/git/metasploit-framework && ./msfconsole && popd"
+
+function git-current-branch {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /'
+}
+export PS1="[ruby-\$(~/.rvm/bin/rvm-prompt v p g)]\$(git-current-branch)\n$PS1"
+
+# GPG agent stuff, needed for Kali linux
+# Need to apt-get install gnupg-agent first. 
+
+GPG_TTY=$(tty)
+export GPG_TTY
+
+if [ -f "${HOME}/.gpg-agent-info" ]; then
+  . "${HOME}/.gpg-agent-info"
+  export GPG_AGENT_INFO
+  export SSH_AUTH_SOCK
+fi
+
+alias m="cd $HOME/git/metasploit-framework"
