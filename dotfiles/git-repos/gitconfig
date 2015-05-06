@@ -58,3 +58,7 @@ branch-current =! "git branch | grep '*' | cut -f 2 -d ' '"
 # Create a pull request in a web browser from the CLI. Usage: $1 is HISNAME, $2 is HISBRANCH
 # Fixes from @kernelsmith, thanks!
 pr-url =!"xdg-open https://github.com/$(git config github.user)/$(git repo-current)/pull/new/$1:$2...$(git branch-current) #"
+
+# Get a list of recently changed (but uncommitted) modules, figure out
+# what PR they first came in on
+cleanup-prs = !"for i in `git status | grep modules | sed s/#.*modules/modules/`; do echo -n \"Edited $i first landed in \" && git log --oneline --first-parent $i | tail -1 | sed 's/.*Land //' && echo ''; done"
