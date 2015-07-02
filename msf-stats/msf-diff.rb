@@ -11,9 +11,9 @@ f = {
 f.each_pair do |k,v|
 	puts v.inspect
 end
-tags = %x{git tag | grep 2015 }.split(/\n/)
+tags = %x{git tag | grep blog- }.split(/\n/)
 last_tag    = ARGV[0] || tags.last
-next_branch = ARGV[1] || "release"
+next_branch = ARGV[1] || "HEAD"
 
 puts "Comparing last tag: #{last_tag} with branch '#{next_branch}'" 
 %x{git diff -b --name-only #{last_tag}..#{next_branch} > #{f[:names]}}
