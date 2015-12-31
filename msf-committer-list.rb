@@ -22,4 +22,4 @@ puts sorted_by_count.map {|x| "#{x[0]} (#{x[1]})"}.join(', ')
 puts ""
 
 puts "Alphabetized committer list:"
-puts committers.keys.sort.join(', ')
+puts committers.keys.sort_by {|author, count| author.downcase}.join(', ')
