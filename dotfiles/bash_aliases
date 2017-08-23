@@ -4,10 +4,29 @@
 
 alias msfconsole="pushd $HOME/git/metasploit-framework && ./msfconsole && popd"
 
+# Sets the prompt to be pleasant for working in ruby-flavored git checkouts
+
 function git-current-branch {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /'
 }
-export PS1="[ruby-\$(~/.rvm/bin/rvm-prompt v p g)]\$(git-current-branch)\n$PS1"
+
+function set_ruby_terminal {
+local CLR="\[\033[0m\]"
+local RED="\[\033[31m\]"
+local BLU="\[\033[34m\]"
+local WHT="\[\033[1;37m\]"
+
+local TERM_STRING="["
+local TERM_STRING="${TERM_STRING}${RED}"
+local TERM_STRING="${TERM_STRING}ruby-\$(~/.rvm/bin/rvm-prompt v p)${CLR}"
+local TERM_STRING="${TERM_STRING}${BLU}\$(~/.rvm/bin/rvm-prompt g)${CLR}"
+local TERM_STRING="${TERM_STRING}]"
+local TERM_STRING="${TERM_STRING}${WHT}\$(git-current-branch)${CLR}\n"
+
+export PS1="${TERM_STRING}${PS1}"
+}
+
+set_ruby_terminal
 
 # GPG agent stuff, needed for Kali linux
 # Need to apt-get install gnupg-agent first. 
