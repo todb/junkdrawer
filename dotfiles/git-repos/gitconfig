@@ -1,7 +1,8 @@
+
 [user]
   name = Tod Beardsley
   email = tod_beardsley@rapid7.com
-  signingkey = EA19CAAC
+  signingkey = C85943FE
 
 [github]
   user = todb-r7
@@ -49,15 +50,12 @@ b= blame -w
 # Spin up a quick temp branch, because git stash is too spooky.
 temp = !"git branch -D temp; git checkout -b temp"
 
-# Gets the current branch
-branch-current =! "git branch | grep '*' | cut -f 2 -d ' '"
-
-# Gets the current base repo name
-  repo-current =! "basename $(git rev-parse --show-toplevel)"
-
 # Create a pull request in a web browser from the CLI. Usage: $1 is HISNAME, $2 is HISBRANCH
 # Fixes from @kernelsmith, thanks!
-pr-url =!"xdg-open https://github.com/$(git config github.user)/$(git repo-current)/pull/new/$1:$2...$(git branch-current) #"
+pr-url =!"xdg-open https://github.com/$(git config github.user)/$(basename $(git rev-parse --show-toplevel))/pull/new/$1:$2...$(git rev-parse --abbrev-ref HEAD) #"
+
+# Show the aliases in a sane way
+  alias = config --get-regexp alias
 
 # Get a list of recently changed (but uncommitted) modules, figure out
 # what PR they first came in on
