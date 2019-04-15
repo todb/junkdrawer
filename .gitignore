@@ -27,3 +27,6 @@ msf-stats/blog.html
 *.orig
 *.rej
 *~
+
+# cve to json artifacts
+CVE-*.json
