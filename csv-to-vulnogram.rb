@@ -1,7 +1,13 @@
 #!/usr/bin/ruby
 
 require 'csv'
-require 'json'
+# require 'json' # Turns out, no JSON objects are here, just strings.
+
+# NOTE: This assumes one single affected version, which is
+# usually the case. If there is a known range of versions,
+# then you'll need to monkey with that in the output manually.
+
+VERSION = "0.0.2"
 
 infile_name = ARGV[0]
 begin
@@ -29,13 +35,21 @@ csv.each do |line|
 end
 
 def convert_to_vulnogram(cve={})
-  auto_title = "#{cve[:vendor_name]} #{cve[:product_name]} #{cve[:cwe_text]}"
+  vendor = cve[:vendor_name]
+  product = cve[:product_name]
+  version = cve[:version_value]
+  cwe = cve[:cwe_id]
+  bug = cve[:cwe_text]
+
+  auto_title = "#{vendor} #{product} #{cve[:cwe_text]}"
+  auto_desc = "#{vendor} #{product} version #{version} suffers from an instance of #{cwe}: #{bug}."
+
   %Q{ {
   "data_type": "CVE",
   "data_format": "MITRE",
   "data_version": "4.0",
   "generator": {
-    "engine": "Tod's Junk Converter 0.0.1"
+    "engine": "Tod's Junk Converter #{VERSION}"
   },
   "CVE_data_meta": {
     "ID": "#{cve[:cve_id]}",
@@ -45,26 +59,21 @@ def convert_to_vulnogram(cve={})
     "AKA": "",
     "STATE": "PUBLIC"
   },
-  "source": {
-    "defect": [],
-    "advisory": "",
-    "discovery": "UNKNOWN"
-  },
   "affects": {
     "vendor": {
       "vendor_data": [
         {
-          "vendor_name": "#{cve[:vendor_name]}",
+          "vendor_name": "#{vendor}",
           "product": {
             "product_data": [
               {
-                "product_name": "#{cve[:product_name]}",
+                "product_name": "#{product}",
                 "version": {
                   "version_data": [
                     {
                       "version_name": "",
                       "version_affected": "=",
-                      "version_value": "#{cve[:version_value]}",
+                      "version_value": "#{version}",
                       "platform": ""
                     }
                   ]
@@ -82,11 +91,11 @@ def convert_to_vulnogram(cve={})
         "description": [
           {
             "lang": "eng",
-            "value": "#{cve[:cwe_id]}"
+            "value": "#{cwe}"
           },
           {
             "lang": "eng",
-            "value": "#{cve[:cwe_text]}"
+            "value": "#{bug}"
           }
         ]
       }
@@ -96,7 +105,7 @@ def convert_to_vulnogram(cve={})
     "description_data": [
       {
         "lang": "eng",
-        "value": ""
+        "value": "#{auto_desc}"
       }
     ]
   },
@@ -109,16 +118,12 @@ def convert_to_vulnogram(cve={})
       }
     ]
   },
-  "configuration": [],
   "exploit": [
     {
       "lang": "eng",
       "value": "#{cve[:misc_ref]}"
     }
-  ],
-  "work_around": [],
-  "solution": [],
-  "credit": []
+  ]
 }}
 end
 
