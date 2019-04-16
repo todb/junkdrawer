@@ -20,6 +20,7 @@ end
 cve_data = []
 
 csv.each do |line|
+  next if line["PR of JSON"] # Already submitted
   next unless line["Reserve CVE"]
   new_cve = {
     :cve_id => line["Reserve CVE"],
