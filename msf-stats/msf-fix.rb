@@ -57,6 +57,7 @@ File.unlink msf_spool rescue nil
 
 rc_filehandle = File.open(rc_file, "wb")
 
+rc_filehandle.puts "sleep 5"
 rc_filehandle.puts "spool /tmp/modinfo.txt"
 
 def msf_modname(modname)
@@ -154,7 +155,7 @@ rc_filehandle.close rescue nil
 # Now run msfconsole, which will exit after writing out to a file.
 
 puts "Running the console..."
-console_output = %x{./msfconsole -L -r #{rc_file}}
+console_output = %x{./msfconsole -qL -r #{rc_file}}
 @exploits = {}
 @modules = {}
 data = {}
