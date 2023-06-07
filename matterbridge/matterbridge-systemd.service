@@ -1,0 +1,13 @@
+[Unit]
+Description=Matterbridge daemon
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/home/cvebot/matterbridge-1.25.2-linux-64bit -conf /home/cvebot/matterbridge.toml
+Restart=always
+RestartSec=5s
+User=cvebot
+
+[Install]
+WantedBy=multi-user.target
