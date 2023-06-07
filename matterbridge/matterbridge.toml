@@ -1,0 +1,75 @@
+# Services to shuttle messages between
+
+[slack]
+[slack.myslack]
+Token="aaaa-000000000000-0000000000000-a0a0a0a0a0a0a0a0a0a0a0a" # This is a secret token.
+RemoteNickFormat="[{PROTOCOL}] <@{NICK}> "
+PreserveThreading=true
+
+[discord.mydiscord]
+Token="Aa0Aa0Aa0Aa0Aa0Aa0Aa0Aa0Aa.A_aAaA._Aa0Aa0Aa0Aa0Aa0Aa0Aa0Aa0Aa0Aa0Aa0Aa0A" # This is a secret token.
+Server="1006971567760211980" # It's just the server ID, not a secret. Forget any docs about a guild.
+RemoteNickFormat="[{PROTOCOL}] <@{NICK}> " 
+
+# Gateways are channel integrations. To avoid confusion, try to stick to obvious
+# mappings between each; ideally, identical. If they're not identical, at least
+# be obvious in these comments
+
+
+# test-bridge on Discord and Slack; both are private.
+# This is also a nice demo of the format. You need a 
+# [[gateway]] name, then two [[gateway.inout]] stanzas.
+
+[[gateway]]
+name="gateway-test-bridge"
+enable=true
+
+[[gateway.inout]]
+account="discord.mydiscord"
+channel="test-bridge"
+
+[[gateway.inout]]
+account="slack.myslack"
+channel="test-bridge"
+
+# Public channel bridge
+
+[[gateway]]
+name="gateway-public-general"
+enable=true
+
+[[gateway.inout]]
+account="discord.mydiscord"
+channel="public-chat"
+
+[[gateway.inout]]
+account="slack.myslack"
+channel="general"
+
+# cve-services bridge
+
+[[gateway]]
+name="gateway-cve-services"
+enable=true
+
+[[gateway.inout]]
+account="discord.mydiscord"
+channel="cve-services"
+
+[[gateway.inout]]
+account="slack.myslack"
+channel="cve-services"
+
+# research-dibs bridge
+
+[[gateway]]
+name="gateway-research-dibs"
+enable=true
+
+[[gateway.inout]]
+account="discord.mydiscord"
+channel="research-dibs"
+
+[[gateway.inout]]
+account="slack.myslack"
+channel="research-dibs"
