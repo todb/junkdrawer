@@ -30,3 +30,6 @@ msf-stats/blog.html
 
 # cve to json artifacts
 CVE-*.json
+
+# cve source files
+allitems.*
