@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+    <head>
+        <title>Miniflux</title>
+        <dateCreated>Tue, 14 Nov 2023 23:03:02 UTC</dateCreated>
+    </head>
+    <body>
+        <outline text="CISA">
+            <outline title="Alerts" text="Alerts" xmlUrl="https://www.cisa.gov/cybersecurity-advisories/alerts.xml" htmlUrl="https://www.cisa.gov/"></outline>
+            <outline title="#cisa" text="#cisa" xmlUrl="https://infosec.exchange/tags/cisa.rss" htmlUrl="https://infosec.exchange/tags/cisa"></outline>
+        </outline>
+        <outline text="CVEs">
+            <outline title="VulDB Recent Entries" text="VulDB Recent Entries" xmlUrl="https://vuldb.com/?rss.recent" htmlUrl="https://vuldb.com"></outline>
+        </outline>
+        <outline text="Exploits">
+            <outline title="Exploit-DB.com RSS Feed" text="Exploit-DB.com RSS Feed" xmlUrl="https://www.exploit-db.com/rss.xml" htmlUrl="https://www.exploit-db.com"></outline>
+            <outline title="Recent Commits to 0days-in-the-wild:main" text="Recent Commits to 0days-in-the-wild:main" xmlUrl="https://github.com/googleprojectzero/0days-in-the-wild/commits/main.atom" htmlUrl="https://github.com/googleprojectzero/0days-in-the-wild/commits/main"></outline>
+        </outline>
+        <outline text="Mastodon">
+            <outline title="#exploit" text="#exploit" xmlUrl="https://infosec.exchange/tags/exploit.rss" htmlUrl="https://infosec.exchange/tags/exploit"></outline>
+            <outline title="#rce" text="#rce" xmlUrl="https://infosec.exchange/tags/RCE.rss" htmlUrl="https://infosec.exchange/tags/rce"></outline>
+            <outline title="#vulnerability" text="#vulnerability" xmlUrl="https://infosec.exchange/tags/vulnerability.rss" htmlUrl="https://infosec.exchange/tags/vulnerability"></outline>
+            <outline title="#eitw" text="#eitw" xmlUrl="https://infosec.exchange/tags/eitw.rss" htmlUrl="https://infosec.exchange/tags/eitw"></outline>
+
+        </outline>
+        <outline text="PoCs">
+            <outline title="attackerkb&#39;s timeline" text="attackerkb&#39;s timeline" xmlUrl="https://infosec.place/users/attackerkb/feed.atom" htmlUrl="https://infosec.place/users/attackerkb/feed.atom"></outline>
+            <outline title="packet_storm" text="packet_storm" xmlUrl="https://security.theater/@packet_storm/tagged/exploit.rss" htmlUrl="https://security.theater/@packet_storm/tagged/exploit"></outline>
+            <outline title="rapid7/metasploit-framework - Pull Requests" text="rapid7/metasploit-framework - Pull Requests" xmlUrl="https://openrss.org/github.com/rapid7/metasploit-framework/pulls" htmlUrl="https://github.com/rapid7/metasploit-framework/pulls"></outline>
+        </outline>
+        <outline text="SecNews">
+            <outline title="Ars Technica - All content" text="Ars Technica - All content" xmlUrl="http://feeds.arstechnica.com/arstechnica/index" htmlUrl="https://arstechnica.com"></outline>
+            <outline title="BleepingComputer" text="BleepingComputer" xmlUrl="https://www.bleepingcomputer.com/feed/" htmlUrl="https://www.bleepingcomputer.com/"></outline>
+            <outline title="@campuscodi Mastodon" text="@campuscodi Mastodon" xmlUrl="https://mastodon.social/@campuscodi.rss" htmlUrl="https://mastodon.social/@campuscodi"></outline>
+            <outline title="Cybernews" text="Cybernews" xmlUrl="https://infosec.exchange/@cybernews.rss" htmlUrl="https://infosec.exchange/@cybernews"></outline>
+            <outline title="Dark Reading" text="Dark Reading" xmlUrl="https://www.darkreading.com/rss.xml" htmlUrl="https://www.darkreading.com"></outline>
+            <outline title="Hacker News - Newest: &#34;vulnerability&#34;" text="Hacker News - Newest: &#34;vulnerability&#34;" xmlUrl="https://hnrss.org/newest?q=vulnerability" htmlUrl="https://news.ycombinator.com/newest"></outline>
+            <outline title="Kim Zetter" text="Kim Zetter" xmlUrl="https://infosec.exchange/@kimzetter.rss" htmlUrl="https://infosec.exchange/@kimzetter"></outline>
+            <outline title="Lorenzo Franceschi-Bicchierai" text="Lorenzo Franceschi-Bicchierai" xmlUrl="https://infosec.exchange/@lorenzofb.rss" htmlUrl="https://infosec.exchange/@lorenzofb"></outline>
+            <outline title="Project Zero" text="Project Zero" xmlUrl="https://googleprojectzero.blogspot.com/feeds/posts/default?alt=rss" htmlUrl="https://googleprojectzero.blogspot.com/"></outline>
+            <outline title="The GreyNoise Blog" text="The GreyNoise Blog" xmlUrl="https://www.greynoise.io/blog/rss.xml" htmlUrl="https://www.greynoise.io"></outline>
+            <outline title="This Week in Security" text="This Week in Security" xmlUrl="https://us18.campaign-archive.com/feed?u=e1ad6038c994abec17dafb116&amp;id=a2457dc8ad" htmlUrl="https://us18.campaign-archive.com/feed?u=e1ad6038c994abec17dafb116&amp;id=a2457dc8ad"></outline>
+            <outline title="Zack Whittaker" text="Zack Whittaker" xmlUrl="https://mastodon.social/@zackwhittaker.rss" htmlUrl="https://mastodon.social/@zackwhittaker"></outline>
+        </outline>
+        <outline text="Updates">
+            <outline title="Miniflux Releases" text="Miniflux Releases" xmlUrl="https://github.com/miniflux/v2/releases.atom" htmlUrl="https://github.com/miniflux/v2/releases"></outline>
+        </outline>
+    </body>
+</opml>
