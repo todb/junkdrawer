@@ -21,7 +21,6 @@
             <outline title="#rce" text="#rce" xmlUrl="https://infosec.exchange/tags/RCE.rss" htmlUrl="https://infosec.exchange/tags/rce"></outline>
             <outline title="#vulnerability" text="#vulnerability" xmlUrl="https://infosec.exchange/tags/vulnerability.rss" htmlUrl="https://infosec.exchange/tags/vulnerability"></outline>
             <outline title="#eitw" text="#eitw" xmlUrl="https://infosec.exchange/tags/eitw.rss" htmlUrl="https://infosec.exchange/tags/eitw"></outline>
-
         </outline>
         <outline text="PoCs">
             <outline title="attackerkb&#39;s timeline" text="attackerkb&#39;s timeline" xmlUrl="https://infosec.place/users/attackerkb/feed.atom" htmlUrl="https://infosec.place/users/attackerkb/feed.atom"></outline>
