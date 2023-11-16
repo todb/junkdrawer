@@ -29,18 +29,18 @@
             <outline title="rapid7/metasploit-framework - Pull Requests" text="rapid7/metasploit-framework - Pull Requests" xmlUrl="https://openrss.org/github.com/rapid7/metasploit-framework/pulls" htmlUrl="https://github.com/rapid7/metasploit-framework/pulls"></outline>
         </outline>
         <outline text="SecNews">
+            <outline title="Catalin Cimpanu Mastodon" text="Catalin Cimpanu" xmlUrl="https://mastodon.social/@campuscodi.rss" htmlUrl="https://mastodon.social/@campuscodi"></outline>
+            <outline title="Lorenzo Franceschi-Bicchierai Mastodon" text="Lorenzo Franceschi-Bicchierai" xmlUrl="https://infosec.exchange/@lorenzofb.rss" htmlUrl="https://infosec.exchange/@lorenzofb"></outline>
+            <outline title="Zack Whittaker Mastodon" text="Zack Whittaker" xmlUrl="https://mastodon.social/@zackwhittaker.rss" htmlUrl="https://mastodon.social/@zackwhittaker"></outline>
+            <outline title="Kim Zetter Mastodon" text="Kim Zetter" xmlUrl="https://infosec.exchange/@kimzetter.rss" htmlUrl="https://infosec.exchange/@kimzetter"></outline>
             <outline title="Ars Technica - All content" text="Ars Technica - All content" xmlUrl="http://feeds.arstechnica.com/arstechnica/index" htmlUrl="https://arstechnica.com"></outline>
             <outline title="BleepingComputer" text="BleepingComputer" xmlUrl="https://www.bleepingcomputer.com/feed/" htmlUrl="https://www.bleepingcomputer.com/"></outline>
-            <outline title="@campuscodi Mastodon" text="@campuscodi Mastodon" xmlUrl="https://mastodon.social/@campuscodi.rss" htmlUrl="https://mastodon.social/@campuscodi"></outline>
             <outline title="Cybernews" text="Cybernews" xmlUrl="https://infosec.exchange/@cybernews.rss" htmlUrl="https://infosec.exchange/@cybernews"></outline>
             <outline title="Dark Reading" text="Dark Reading" xmlUrl="https://www.darkreading.com/rss.xml" htmlUrl="https://www.darkreading.com"></outline>
             <outline title="Hacker News - Newest: &#34;vulnerability&#34;" text="Hacker News - Newest: &#34;vulnerability&#34;" xmlUrl="https://hnrss.org/newest?q=vulnerability" htmlUrl="https://news.ycombinator.com/newest"></outline>
-            <outline title="Kim Zetter" text="Kim Zetter" xmlUrl="https://infosec.exchange/@kimzetter.rss" htmlUrl="https://infosec.exchange/@kimzetter"></outline>
-            <outline title="Lorenzo Franceschi-Bicchierai" text="Lorenzo Franceschi-Bicchierai" xmlUrl="https://infosec.exchange/@lorenzofb.rss" htmlUrl="https://infosec.exchange/@lorenzofb"></outline>
             <outline title="Project Zero" text="Project Zero" xmlUrl="https://googleprojectzero.blogspot.com/feeds/posts/default?alt=rss" htmlUrl="https://googleprojectzero.blogspot.com/"></outline>
             <outline title="The GreyNoise Blog" text="The GreyNoise Blog" xmlUrl="https://www.greynoise.io/blog/rss.xml" htmlUrl="https://www.greynoise.io"></outline>
             <outline title="This Week in Security" text="This Week in Security" xmlUrl="https://us18.campaign-archive.com/feed?u=e1ad6038c994abec17dafb116&amp;id=a2457dc8ad" htmlUrl="https://us18.campaign-archive.com/feed?u=e1ad6038c994abec17dafb116&amp;id=a2457dc8ad"></outline>
-            <outline title="Zack Whittaker" text="Zack Whittaker" xmlUrl="https://mastodon.social/@zackwhittaker.rss" htmlUrl="https://mastodon.social/@zackwhittaker"></outline>
         </outline>
         <outline text="Updates">
             <outline title="Miniflux Releases" text="Miniflux Releases" xmlUrl="https://github.com/miniflux/v2/releases.atom" htmlUrl="https://github.com/miniflux/v2/releases"></outline>
