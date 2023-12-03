@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple TODO App</title>
+    <style>
+        .completed {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>TODO App</h1>
+
+    This was written with ChatGPT and the prompt: <I>Write a TODO app in javascript where I can add items, then strike through items when I check them completed. It should only rely on DOM manipulation and be as simple as possible. Please provide the entire HTML.</I>
+    <input type="text" id="taskInput" placeholder="Add a new task">
+    <button onclick="addTask()">Add Task</button>
+
+    <ul id="taskList">
+        <!-- Tasks will be dynamically added here -->
+    </ul>
+
+    <script>
+        function addTask() {
+            var inputElement = document.getElementById('taskInput');
+            var taskListElement = document.getElementById('taskList');
+
+            // Get the task description from the input
+            var taskDescription = inputElement.value.trim();
+
+            // Check if the input is not empty
+            if (taskDescription !== '') {
+                // Create a new list item
+                var listItem = document.createElement('li');
+                listItem.textContent = taskDescription;
+
+                // Set up a click event listener to toggle the 'completed' class
+                listItem.addEventListener('click', function () {
+                    listItem.classList.toggle('completed');
+                });
+
+                // Append the new list item to the task list
+                taskListElement.appendChild(listItem);
+
+                // Clear the input field
+                inputElement.value = '';
+            }
+        }
+    </script>
+
+</body>
+</html>
