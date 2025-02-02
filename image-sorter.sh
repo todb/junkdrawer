@@ -1,4 +1,4 @@
-#!/bin/
+#!/bin/zsh
 
 # Note, this writes and reads from tmp in nonsecure ways. Don't use this to
 # parse untrusted inputs. It also creates dynamic cmd line arguments. Also
