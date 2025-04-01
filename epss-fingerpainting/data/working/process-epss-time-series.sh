@@ -2,13 +2,8 @@
 
 # Thanks ChatGPT!
 
-# Check if model version is provided
-if [[ -z "$1" ]]; then
-    echo "Usage: $0 <model_version>"
-    exit 1
-fi
-
-MODEL_VERSION="$1"
+MODEL_VERSION="${1:-v2023.03.01}"
+echo "Using model ${MODEL_VERSION} (specify a different one if you like, current is v2025.03.14)"
 
 # Create a unique temp directory based on the process ID
 temp_dir="temp_epss_merge_$$"
