@@ -64,3 +64,6 @@ NR > 1 {
 ' "$input_file" >> "$output_file"
 
 echo "Results saved to $output_file"
+echo "----"
+cat $output_file
+echo "----"
