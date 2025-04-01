@@ -35,14 +35,14 @@ BEGIN {
 }
 NR > 1 {
     cve = $1;
-    for (i = 2; i + days <= NF; i++) {
+    for (i = NF - 1; i - days >= 2; i--) {  # Start from the last value and move backward
         sum_diff = 0;
         # Calculate the total difference over the defined window of days
         for (j = 0; j < days; j++) {
-            value1 = $(i+j);
-            value2 = $(i+j+1);
+            value1 = $(i-j);
+            value2 = $(i-j-1);
             if (value1 != "" && value2 != "") {
-                diff = value2 - value1;
+                diff = value2 - value1;  # Reverse the order of subtraction to move backwards
                 sum_diff += diff;
             }
         }
