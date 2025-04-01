@@ -42,7 +42,7 @@ NR > 1 {
             value1 = $(i-j);
             value2 = $(i-j-1);
             if (value1 != "" && value2 != "") {
-                diff = value2 - value1;  # Reverse the order of subtraction to move backwards
+                diff = value1 - value2;  # Subtract the older value from the newer one to go backwards
                 sum_diff += diff;
             }
         }
