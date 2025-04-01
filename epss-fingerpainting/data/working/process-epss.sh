@@ -13,7 +13,7 @@ for file in epss_scores-*.csv; do
         exit 2
     fi
 
-    new_filename="cvs-epss-percentile-${score_date}-${model_version}.csv"
+    new_filename="cve-epss-percentile-${score_date}-${model_version}.csv"
     # Remove the first two lines and save as the new file
     tail -n +3 "$file" > "$new_filename"
     echo "Processed $file -> $new_filename"
