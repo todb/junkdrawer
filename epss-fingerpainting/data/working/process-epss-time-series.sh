@@ -27,8 +27,8 @@ done
 # Merge all temp CSVs into a single time series CSV
 output_file="epss-timeseries-${MODEL_VERSION}.csv"
 
-# Get sorted list of all unique CVEs
-awk -F, 'NR > 1 {print $1}' ${temp_dir}/*.csv | sort -u > "${temp_dir}/all_cves.txt"
+echo "Reverse sorting CVEs..."
+awk -F, 'NR > 1 {print $1}' ${temp_dir}/*.csv | sort -ur > "${temp_dir}/all_cves.txt"
 
 # Prepare header row
 echo -n "CVE" > "$output_file"
