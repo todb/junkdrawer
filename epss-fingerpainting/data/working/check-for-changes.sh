@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# Input CSV file (replace with your file)
-input_file="test.csv"
+# Thanks ChatGPT!
+
+# Default input file
+default_input_file="epss-timeseries-v2023.03.01.csv"
 
 # Output file for CVEs with significant changes
 output_file="cves_with_significant_changes.csv"
@@ -9,17 +11,20 @@ output_file="cves_with_significant_changes.csv"
 # Default values for magnitude and days
 magnitude=0.05
 days=1
+input_file="$default_input_file"  # Set default input file
 
 # Parse command line options
 while [[ "$#" -gt 0 ]]; do
     case "$1" in
         --magnitude) magnitude="$2"; shift ;;
         --days) days="$2"; shift ;;
+        --file) input_file="$2"; shift ;;  # Set input file if provided
         *) echo "Unknown option: $1"; exit 1 ;;
     esac
     shift
 done
 
+echo "Checking $input_file for changes of at least $magnitude over $days days..."
 # Initialize the output file
 echo "CVE,Change" > "$output_file"
 
@@ -29,7 +34,7 @@ IFS=',' read -r header_line < "$input_file"
 dates=($(echo "$header_line" | cut -d, -f2-))
 
 # Process the CSV file, starting from the second line (NR > 1)
-awk -F, -v dates="${dates[*]}" -v magnitude="$magnitude" -v days="$days" '
+awk -F, -v dates="${dates[*]}" -v magnitude="$magnitude" -v days="$days" -v input_file="$input_file" '
 BEGIN {
     split(dates, date_arr, " ");  # Split dates into array
 }
