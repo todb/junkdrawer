@@ -1,39 +1,38 @@
 #!/bin/zsh
 
 set -euo pipefail
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Auditing disputed CVEs..."
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Starting CVE audit..."
 
 # Root of the cvelist git repo
-REPO="/Users/todbeardsley/git/cvelistV5/"
+REPO="../cvelistV5/"
 cd "$REPO"
 
 # Output files
-echo -n > disputed-rejected.txt
-echo -n > rejected-without-dispute.txt
-echo -n > disputed-published.txt
-echo -n > published-rejected.txt
+echo -n > rejected.txt
+echo -n > disputed-today.txt
+echo -n > rejected-after-published.txt
+echo -n > rejected-after-disputed.txt
+echo -n > rejected-unpublished.txt
 
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Gathering currently disputed CVEs"
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Gathering currently disputed CVEs (latest commit)"
 
 disputed_files=($(find cves/2025 -name '*.json' \
     -exec jq -r 'select(.containers.cna.tags and (.containers.cna.tags[] == "disputed")) | input_filename' {} +i))
 
 disputed_total=${#disputed_files}
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] There are $disputed_total disputed published CVEs"
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Found $disputed_total currently disputed CVEs"
+printf "%s\n" "${disputed_files[@]}" > disputed-today.txt
 
-printf "%s\n" "${disputed_files[@]}" > disputed-published.txt
-
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Gathering list of rejected CVE files..."
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Gathering rejected CVE files..."
 
 rejected_files=($(find cves/2025 -name '*.json' \
     -exec jq -r 'select(.cveMetadata.state == "REJECTED") | input_filename' {} +))
 
 total=${#rejected_files}
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Found $total rejected CVE records"
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Beginning history scan of rejected CVEs..."
+
 count=0
-
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Found $total rejected CVE records."
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Beginning history scan..."
-
 for file in "${rejected_files[@]}"; do
     count=$((count+1))
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [$count/$total] scanning $file"
@@ -41,6 +40,7 @@ for file in "${rejected_files[@]}"; do
     had_disputed=0
     had_published=0
 
+    # Scan git history
     for commit in $(git rev-list HEAD -- "$file"); do
         content=$(git show "${commit}:${file}" 2>/dev/null || echo "")
         [[ -z "$content" ]] && continue
@@ -55,22 +55,25 @@ for file in "${rejected_files[@]}"; do
             had_published=1
         fi
 
-        # If both flags are found, no need to continue scanning commits
+        # Stop early if both flags found
         [[ $had_disputed -eq 1 && $had_published -eq 1 ]] && break
     done
 
-    if [[ $had_disputed -eq 1 ]]; then
-        echo "$file" >> disputed-rejected.txt
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $file was disputed!"
-    else
-        echo "$file" >> rejected-without-dispute.txt
-    fi
+    # Write to rejected.txt (all rejected)
+    echo "$file" >> rejected.txt
 
-    if [[ $had_published -eq 1 ]]; then
-        echo "$file" >> published-rejected.txt
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $file was previously published!"
+    # Categorize
+    if [[ $had_disputed -eq 1 ]]; then
+        echo "$file" >> rejected-after-disputed.txt
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $file: rejected after disputed"
+    elif [[ $had_published -eq 1 ]]; then
+        echo "$file" >> rejected-after-published.txt
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $file: rejected after published"
+    else
+        echo "$file" >> rejected-unpublished.txt
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $file: rejected without ever being published"
     fi
 done
 
-wc -l disputed-published.txt disputed-rejected.txt rejected-without-dispute.txt published-rejected.txt
+wc -l rejected.txt disputed-today.txt rejected-after-published.txt rejected-after-disputed.txt rejected-unpublished.txt
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Done!"
