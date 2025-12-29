@@ -1,6 +1,6 @@
 From a post by nullstring. Copying here for safekeeping.
 
-'''
+<pre>
 Nullstring's Automatic #DVD #Ripping Riggingill pin this for you bbsPart One - Imaging
 
 This rigging sets up such that when a DVD is inserted into any connected optical drive, a udev rule triggers a systemd service which images the DVD to an ISO in the specified users home directory. this uses dvdbackup and genisoimage to create an unencrypted 1:1 DVD ISO including original menus and such.UDEV
@@ -160,6 +160,6 @@ sudo systemctl daemon-reload
 # now insert a disk and watch
 sudo systemctl list-units 'auto-rip@*.service' ; sudo journalctl -u 'auto-rip@*' -f
 
-'''
+</pre>
 
 https://infosec.exchange/@0x00string/115789509938830722
