@@ -51,7 +51,6 @@ def parse_options
 
   abort 'Error: XP level must be an integer specified with -x/-l/--xp/--level' if options[:xp].nil?
   abort 'Error: XP level must be between 1 and 30.' if options[:xp] < 1 || options[:xp] > 30
-  abort 'Error: Cheapskate level must be zero or more' if options[:cheapskate].negative?
 
   options
 end
